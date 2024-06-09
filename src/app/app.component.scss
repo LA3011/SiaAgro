@@ -1,0 +1,31 @@
+#header{
+    background-color: #1b2631; 
+    color: #1b2631;
+    padding: 1%;
+    align-items: center;
+    display: flex;
+    align-items: center; 
+    height: 12%;
+}
+
+#l1{
+    background-color: #1b263100; 
+    color: #fefeff;
+    background:#1b2631
+}
+
+ion-item:active {
+    background-color: rgba(255, 255, 255, 0.26);
+}
+
+.clickable-element {
+    visibility: hidden; /* Comienza oculto */
+    cursor: pointer; /* Cambia el cursor al hacer clic */
+}
+
+.clickable-element.clicked {
+    visibility: visible; /* Se vuelve visible cuando se hace clic */
+}
+
+
+

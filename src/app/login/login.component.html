@@ -1,0 +1,41 @@
+<ion-card>  
+  <div class="alert alert-danger" role="alert" *ngIf="validationData" style="text-align: center;">
+    {{ messageE }}
+  </div>
+  <ion-card-header style="text-align: center;">
+    <ion-card-title style="font-weight: 700; font-size: 40px; padding: 0;">Inicio Sesión</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item [button]="true" style="border-bottom: 1px solid rgb(0, 4, 255);">
+        <ion-label position="stacked">Ingrese Nombre</ion-label>
+        <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+      </ion-item>
+      <br>
+      <ion-item [button]="true" style="border-bottom: 1px solid rgb(4, 0, 255);">
+        <ion-label position="stacked">Ingrese Password</ion-label>
+        <ion-input type="password" [(ngModel)]="login.password" placeholder="" required="required"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="sendLogin()">Enviar</ion-button>
+    <br>
+    <div style="text-align: center; ">
+      <a color="primary" href="#">¿Olvidaste tú contraseña?</a>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

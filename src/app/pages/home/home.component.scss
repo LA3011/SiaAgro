@@ -1,0 +1,41 @@
+// .shadows:hover{
+//     color: rgba(203, 9, 9, 0.801)
+// }
+.shadows {
+    color: #010000;
+}
+
+.shadows:active {
+    color: #b8a7a3;
+}
+
+
+
+.shadowsC {
+    background-color: #01000000;
+}
+
+.shadowsC:active {
+    background-color: #afacac;
+}
+
+.card-Inicio{ 
+    display: inline-block; 
+    padding: 2px; padding-top: 5%;
+    text-align: center;
+    margin: 4px; 
+    min-height: 110px; 
+    max-width:110px;
+}
+
+.icon-Inicio{
+    height: 45px; 
+    width: 45px;
+}
+
+.card-Primary{
+    justify-content: space-around; 
+    display:flex; 
+    padding-top: 1rem; 
+    padding-bottom: 1rem;
+}

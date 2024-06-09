@@ -1,0 +1,89 @@
+<ion-app style="background-color: #1b26313b;">    
+<ion-content style="background-color: #1b2631;">
+
+  <!-- refresh -->
+  <ion-refresher slot="fixed" [pullFactor]="0.5" [pullMin]="100" [pullMax]="200" (ionRefresh)="refresh($event)">
+    <ion-refresher-content refreshingSpinner="circles"></ion-refresher-content>
+  </ion-refresher>
+
+    <!-- Sidebar -->
+    <ion-menu-toggle id="l1" style="background-color: #1b2631;">
+      
+      <ion-menu color="danger" id="l1" contentId="main-content" style="background-color: #1b26313b;">
+        <div style="border: 1px solid black; background-color: #1b2631;">  
+          <div style="background-color: #1b2631; height: 100vh; align-items: center">
+            <div style=" background-color: #1b2631; height: 12%; align-items: center; display: flex; align-items: center; text-align:center;">
+              <ion-title style="font-size: 2rem;">Menú</ion-title>
+            </div>
+            <div>
+                <ion-item [button]="true" color="#eff2f5" [routerLink]="['/inicio']" style="color: #1b2631;">
+                  <ion-icon style="margin-right: 15px; color: #eff2f5;" name="home"></ion-icon>
+                  <ion-label style=" color: #eff2f5">Inicio</ion-label>
+                </ion-item>
+                <ion-item [button]="true" color="#1b2631;" [routerLink]="['/error404']" style="color: #1b2631;">
+                  <ion-icon style="margin-right: 15px; color: #eff2f5;" name="paw-sharp"></ion-icon>
+                  <ion-label style="color: #eff2f5;">Animales</ion-label>
+                </ion-item>
+                <ion-item [button]="true" color="#1b2631;" [routerLink]="['/error404']" style="color: #1b2631;">
+                  <ion-icon style="margin-right: 15px; color: #eff2f5;" name="leaf"></ion-icon>
+                  <ion-label style="color: #eff2f5;">Cultivos</ion-label>
+                </ion-item>
+                <ion-item [button]="true" color="#1b2631;" [routerLink]="['/usuarios']" style="color: #1b2631;">
+                  <ion-icon style="margin-right: 15px; color: #eff2f5;" name="people"></ion-icon>
+                  <ion-label style="color: #eff2f5;">Usuarios</ion-label>
+                </ion-item>
+            </div>
+          </div>
+        </div>
+      </ion-menu>
+    </ion-menu-toggle>
+    <!-- Sidebar End  -->
+     
+    <!-- Header -->
+    <div class="ion-page" id="main-content">
+        <div id="header" > 
+          
+  
+          <!-- TitlePage -->
+          <ion-buttons slot="start" style="display: inline-block; color: #eff2f5;">
+            <ion-menu-button style="color: #eff2f5; font-size: 6vh;"></ion-menu-button>
+          </ion-buttons>
+          <!-- TitlePage End-->
+           
+          <!-- TitlePage -->
+          <img src="../assets/background/LOGO-siaAgro0-removebg-preview (1).png"  style="height:10vh; background-color:#1b2631;" alt="">
+          <!-- TitlePage End-->
+          
+          <!-- Settings -->
+          <ion-icon id="popover-button" slot="end" name="settings-outline" style="color: #eff2f5; font-size: 6vh; margin-right: 5vh; right: 0vh; position: absolute;">Configuracion</ion-icon>          
+          <ion-popover trigger="popover-button" [dismissOnSelect]="true" style="border-radius: 30px;">
+              <ng-template>
+                <ion-content>
+                  <ion-list>
+                    <ion-item [button]="true" [detail]="false">
+                      <ion-icon name="help-circle-outline" style="margin-right: 5px;"></ion-icon>
+                      Ayuda
+                    </ion-item>
+                    <ion-item [button]="true" id="nested-trigger" (click)="exit()">
+                      <ion-icon name="exit-outline" style="margin-right: 5px;"></ion-icon>
+                      Salir
+                    </ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+          </ion-popover>
+          <!-- Settings End  -->
+        </div>
+      <!-- PaginaContent -->
+      <ion-content>
+        <ion-router-outlet/>
+      </ion-content>
+      <!-- PaginaContent End -->
+    </div>
+    <!-- Header End -->
+</ion-content>
+</ion-app>
+  
+  
+  
+

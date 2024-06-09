@@ -1,0 +1,32 @@
+ion-modal {
+    --height: 50%;
+    --width: 90%;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+  
+  ion-modal::part(backdrop) {
+    background: rgba(209, 213, 219);
+    opacity: 1;
+  }
+  
+  ion-modal ion-toolbar {
+    --background: hsl(236, 100%, 51%);
+    --color: white;
+  }
+
+  ion-modal{
+    background: #00000069;
+  }
+
+  .toolbar-container-delete{
+    background: red;
+  }
+
+  .form-control-lg{
+    outline: none;
+    font-size: 14px;
+    padding: 0%;
+  }
+
+  
