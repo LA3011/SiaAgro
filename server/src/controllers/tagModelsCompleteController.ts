@@ -7,6 +7,7 @@ class TagModelsCompleteController {
     public async InfoTag(req: Request, res: Response)  {
 
         try{
+
             const { tag } = req.params;
             const fs = require('fs'); 
 
@@ -15,14 +16,16 @@ class TagModelsCompleteController {
             // const dirBase = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data';
 
             // N~Archivos './Entrenamiento/tag'
-            const archivosEntren = pathpackage.join(__dirname, '..','..','..', 'InteligenciaArtificial', 'data','entrenamiento',tag);      
-            // const archivosEntren = fs.readdirSync(`${dirBase}/entrenamiento/${tag}`);
+            const pathArchivosEntren = pathpackage.join(__dirname, '..','..','..', 'InteligenciaArtificial', 'data','entrenamiento',tag);      
+            const archivosEntren = fs.readdirSync(pathArchivosEntren);
             const arcEntrenamiento = archivosEntren.length;
 
             // N~Archivos './Validacion/tag'
-            const archivosValid = pathpackage.join(__dirname, '..','..','..', 'InteligenciaArtificial', 'data','validacion',tag);      
-            // const archivosValid = fs.readdirSync(`${dirBase}/validacion/${tag}`);
+            const pathArchivosValid = pathpackage.join(__dirname, '..','..','..', 'InteligenciaArtificial', 'data','validacion',tag);      
+            const archivosValid = fs.readdirSync(pathArchivosValid);
             const arcValidacion = archivosValid.length;
+
+            console.log(archivosEntren)
 
             // Data
             const data = {
