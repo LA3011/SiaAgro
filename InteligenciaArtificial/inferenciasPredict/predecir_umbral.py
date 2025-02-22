@@ -41,8 +41,6 @@ def predecir_con_umbral(imagen_path, umbral):
         #    return print('x. ',confianza_maxima)
 
         # --------------------------------------------------------- 
-        elif respuesta == 0:
-            return print('Hoja de Guayaba')
         #{{elif}}
             #{{return}}
 
