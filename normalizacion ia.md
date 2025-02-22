@@ -6,8 +6,6 @@
   para solucionarlo se debe hacer lo siguiente. 
   
     1) Eliminar todas las Etiquetas <InteligenciaArtificial/data/validacion> y <InteligenciaArtificial/data/entrenamiento> 
-    
-    
     2) modificar manualmente el archivo <InteligenciaArtificial/inferenciasPredict/predecir_umbral.py> y debe quedar de la sig. manera
     
     ./SiaAgro/InteligenciaArtificial/inferenciasPredict/predecir_umbral.py: 
