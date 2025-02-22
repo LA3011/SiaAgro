@@ -3,7 +3,10 @@
   > InteligenciaArtificial/data/validacion/.x
 
   De lo contrario, si "NO SE ELIMINAN" y se llega agregar una etiqueta La IA empezara a dar fallas, 
-  para solucionarlo se debe modificar manualmente el archivo <InteligenciaArtificial/inferenciasPredict/predecir_umbral.py> y debe quedar de la sig. manera
+  para solucionarlo se debe hacer lo siguiente
+    1) Eliminar todas las Etiquetas <InteligenciaArtificial/data/validacion> y <InteligenciaArtificial/data/entrenamiento> 
+    2) modificar manualmente el archivo <InteligenciaArtificial/inferenciasPredict/predecir_umbral.py> y debe quedar de la sig. manera
+    
     ./SiaAgro/InteligenciaArtificial/inferenciasPredict/predecir_umbral.py: 
 
     # Comparar con el umbral
