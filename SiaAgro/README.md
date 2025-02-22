@@ -1,2 +1,0 @@
-# SiaAgro
-ProyectoSocioTecnologico3
