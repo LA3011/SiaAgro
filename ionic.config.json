@@ -1,7 +1,0 @@
-{
-  "name": "SiaAgro",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
