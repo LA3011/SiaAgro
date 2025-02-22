@@ -1,0 +1,335 @@
+# Original ----------------------------------------------------------------------------------------------------------------
+
+import os
+import sys
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Convolution2D
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import Dropout, Flatten,  Dense, Activation
+from tensorflow.python.keras import backend as K
+
+K.clear_session()
+
+data_validacion = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/validacion'
+data_entrenamiento = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/entrenamiento'
+
+#PARAMETROS                    # <== 2880 [train] 727 [val]
+epocas = 100                   # <== DEPENDE_COMPLEJIDAD_RED (50-100)
+batch_size = 32                # <== DEPENDE_RENDIMIENTO_PC CPU(32-64)
+
+pasos = 36                     # <== (total_muestras_train/batch_size)
+pasos_validacion = 24          # <== (total_muestras_val/batch_size)
+
+altura, longitud = 100, 100
+filtrosConvl1 = 32
+filtrosConvl2 = 64
+tamano_filtro1 = (3, 3)
+tamano_filtro2 = (2, 2)
+tamano_pool = (2, 2)
+lres = 0.0005
+
+# TEST
+# pasosTest = 7            
+# epocasTest = 3
+
+
+# # Clases Agg
+clases = 4
+
+# #PREPROCESAMIENTO IMG
+entrenamiento_datagen = ImageDataGenerator(
+    rescale=1. / 255,
+    shear_range=0.3,
+    zoom_range=0.3,
+    horizontal_flip=True
+)
+validacion_datagen = ImageDataGenerator(
+    rescale=1. / 255
+)
+imagen_entrenamiento = entrenamiento_datagen.flow_from_directory(
+    data_entrenamiento,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+) 
+imagen_validacions = validacion_datagen.flow_from_directory(
+    data_validacion,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+)
+
+# CREAR RED NEURONAL CONVOLUCIONAL #
+cnn = Sequential()
+cnn.add(Convolution2D(filtrosConvl1, tamano_filtro1, padding='same', input_shape=(altura, longitud, 3), activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Convolution2D(filtrosConvl2, tamano_filtro2, padding='same', activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Flatten())
+cnn.add(Dense(256, activation='relu'))  # ---------> aumentar
+cnn.add(Dropout(0.5))
+cnn.add(Dense(clases, activation='softmax'))
+cnn.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=1e-6), metrics=['accuracy'])
+cnn.fit(imagen_entrenamiento, steps_per_epoch=pasos, epochs=epocas, validation_data=imagen_validacions, validation_steps=pasos_validacion)
+
+cnn.save('C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/models.h5')
+cnn.save_weights('C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/pesos.h5')
+
+print("MODELO CREADO EXITOSAMENTE")
+
+# --------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+# modificado 1.1 -----------------------------------------------------------------------------------------------------------
+# mejora % 
+import os
+import sys
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras import backend as K
+
+K.clear_session()
+
+# Rutas de los datos de entrenamiento y validación
+data_validacion = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/validacion'
+data_entrenamiento = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/entrenamiento'
+
+# Hiperparámetros
+epocas = 100
+batch_size = 32
+altura, longitud = 100, 100
+filtrosConvl1 = 32
+filtrosConvl2 = 64
+tamano_filtro1 = (3, 3)
+tamano_filtro2 = (2, 2)
+tamano_pool = (2, 2)
+clases = 4
+
+# Generadores de imágenes
+entrenamiento_datagen = ImageDataGenerator(
+    rescale=1. / 255,
+    shear_range=0.3,
+    zoom_range=0.3,
+    horizontal_flip=True
+)
+validacion_datagen = ImageDataGenerator(
+    rescale=1. / 255
+)
+imagen_entrenamiento = entrenamiento_datagen.flow_from_directory(
+    data_entrenamiento,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+) 
+imagen_validacion = validacion_datagen.flow_from_directory(
+    data_validacion,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+)
+
+# Creación del modelo
+cnn = Sequential()
+cnn.add(Conv2D(filtrosConvl1, tamano_filtro1, padding='same', input_shape=(altura, longitud, 3), activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Conv2D(filtrosConvl2, tamano_filtro2, padding='same', activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Flatten())
+cnn.add(Dense(256, activation='relu'))
+cnn.add(Dropout(0.5))
+cnn.add(Dense(clases, activation='softmax'))
+cnn.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=1e-6), metrics=['accuracy'])
+
+# Entrenamiento del modelo
+cnn.fit(imagen_entrenamiento, steps_per_epoch=len(imagen_entrenamiento), epochs=epocas, validation_data=imagen_validacion, validation_steps=len(imagen_validacion))
+
+# Guardar el modelo
+cnn.save('C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/models.h5')
+cnn.save_weights('C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/pesos.h5')
+
+print("MODELO CREADO EXITOSAMENTE")
+
+# --------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# modificado 1.3 -----------------------------------------------------------------------------------------------------------
+# mejora %
+import os
+import sys
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras import backend as K
+
+K.clear_session()
+
+# Rutas de los datos de entrenamiento y validación
+data_validacion = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/validacion'
+data_entrenamiento = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/entrenamiento'
+
+# Hiperparámetros
+epocas = 100
+batch_size = 32
+altura, longitud = 100, 100
+filtrosConvl1 = 32
+filtrosConvl2 = 64
+tamano_filtro1 = (3, 3)
+tamano_filtro2 = (2, 2)
+tamano_pool = (2, 2)
+clases = 4
+
+# Generadores de imágenes
+entrenamiento_datagen = ImageDataGenerator(
+    rescale=1. / 255,
+    shear_range=0.3,
+    zoom_range=0.3,
+    horizontal_flip=True
+)
+validacion_datagen = ImageDataGenerator(
+    rescale=1. / 255
+)
+imagen_entrenamiento = entrenamiento_datagen.flow_from_directory(
+    data_entrenamiento,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+) 
+imagen_validacion = validacion_datagen.flow_from_directory(
+    data_validacion,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+)
+
+# Creación del modelo
+cnn = Sequential()
+cnn.add(Conv2D(filtrosConvl1, tamano_filtro1, padding='same', input_shape=(altura, longitud, 3), activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Conv2D(filtrosConvl2, tamano_filtro2, padding='same', activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Flatten())
+cnn.add(Dense(256, activation='relu'))
+cnn.add(Dropout(0.5))
+cnn.add(Dense(clases, activation='softmax'))
+cnn.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=1e-6), metrics=['accuracy'])
+
+# Entrenamiento del modelo
+history = cnn.fit(imagen_entrenamiento, steps_per_epoch=len(imagen_entrenamiento), epochs=epocas, validation_data=imagen_validacion, validation_steps=len(imagen_validacion))
+
+# Guardar el modelo
+modelo_guardado = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/models.h5'
+pesos_guardados = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/pesos.h5'
+cnn.save(modelo_guardado)
+cnn.save_weights(pesos_guardados)
+
+print("MODELO CREADO EXITOSAMENTE")
+# ---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+# modificado 1.4 -----------------------------------------------------------------------------------------------------------
+# mejoro % 100
+import os
+import sys
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras import backend as K
+
+K.clear_session()
+
+# Rutas de los datos de entrenamiento y validación
+data_validacion = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/validacion'
+data_entrenamiento = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/data/entrenamiento'
+
+# Hiperparámetros
+epocas = 100
+batch_size = 32
+altura, longitud = 100, 100
+filtrosConvl1 = 64  # Aumentamos el número de filtros
+filtrosConvl2 = 128  # Aumentamos el número de filtros
+tamano_filtro1 = (3, 3)
+tamano_filtro2 = (2, 2)
+tamano_pool = (2, 2)
+clases = 4
+
+# Generadores de imágenes
+entrenamiento_datagen = ImageDataGenerator(
+    rescale=1. / 255,
+    shear_range=0.3,
+    zoom_range=0.3,
+    horizontal_flip=True
+)
+validacion_datagen = ImageDataGenerator(
+    rescale=1. / 255
+)
+imagen_entrenamiento = entrenamiento_datagen.flow_from_directory(
+    data_entrenamiento,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+) 
+imagen_validacion = validacion_datagen.flow_from_directory(
+    data_validacion,
+    target_size=(altura, longitud),
+    batch_size=batch_size,
+    class_mode='categorical'
+)
+
+# Creación del modelo
+cnn = Sequential()
+cnn.add(Conv2D(filtrosConvl1, tamano_filtro1, padding='same', input_shape=(altura, longitud, 3), activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Conv2D(filtrosConvl2, tamano_filtro2, padding='same', activation='relu'))
+cnn.add(MaxPooling2D(pool_size=tamano_pool))
+cnn.add(Flatten())
+cnn.add(Dense(256, activation='relu'))
+cnn.add(Dropout(0.5))
+cnn.add(Dense(clases, activation='softmax'))
+cnn.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=1e-6), metrics=['accuracy'])
+
+# Entrenamiento del modelo
+history = cnn.fit(imagen_entrenamiento, steps_per_epoch=len(imagen_entrenamiento), epochs=epocas, validation_data=imagen_validacion, validation_steps=len(imagen_validacion))
+
+# Guardar el modelo
+modelo_guardado = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/models.h5'
+pesos_guardados = 'C:/Users/LaptopDell/Desktop/siaAgro/Proyecto/InteligenciaArtificial/modelos_create/stagingArea/pesos.h5'
+cnn.save(modelo_guardado)
+cnn.save_weights(pesos_guardados)
+
+print("MODELO CREADO EXITOSAMENTE")
+
