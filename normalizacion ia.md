@@ -8,7 +8,7 @@
     1) Eliminar todas las Etiquetas <InteligenciaArtificial/data/validacion> y <InteligenciaArtificial/data/entrenamiento> 
     2) modificar manualmente el archivo <InteligenciaArtificial/inferenciasPredict/predecir_umbral.py> y debe quedar:
     
-    ./SiaAgro/InteligenciaArtificial/inferenciasPredict/predecir_umbral.py: 
+    ###> ./SiaAgro/InteligenciaArtificial/inferenciasPredict/predecir_umbral.py: 
 
     # Comparar con el umbral
     if confianza_maxima < umbral: 
