@@ -2,7 +2,7 @@
   > InteligenciaArtificial/data/entrenamiento/.x
   > InteligenciaArtificial/data/validacion/.x
 
-  - De lo contrario, si "NO SE ELIMINAN" y se llega agregar una etiqueta La IA empezara a dar fallas, 
+  De lo contrario, si "NO SE ELIMINAN" y se llega agregar una etiqueta La IA empezara a dar fallas, 
   para solucionarlo se debe modificar manualmente el archivo <InteligenciaArtificial/inferenciasPredict/predecir_umbral.py> y debe quedar de la sig. manera
     ./SiaAgro/InteligenciaArtificial/inferenciasPredict/predecir_umbral.py: 
 
