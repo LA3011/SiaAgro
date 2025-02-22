@@ -109,9 +109,9 @@
     margin-top: 2rem;
   }
 
-  .custom-file-input:lang(es) ~ .custom-file-label::after {
-    content: "Elegir";
-  }
+  // .custom-file-input:lang(es) ~ .custom-file-label::after {
+  //   content: "Elegir";
+  // }
 
   > .form-control {
     + .form-control {

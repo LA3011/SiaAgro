@@ -23,7 +23,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     PagesModule,
     LoginModule,
-    TemplateModule
+    TemplateModule,
   ],
   providers: [{
     provide: RouteReuseStrategy,

@@ -4,15 +4,26 @@ import { UsersComponent } from './pages/users/users.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { Error404Component } from './template/error404/error404.component';
+import { InteligencyArtComponent } from './pages/inteligency-art/inteligency-art.component';
+import { InteligencyArtModelsComponent } from './pages/inteligency-art-models/inteligency-art-models.component';
+import { ConexionComponent } from './pages/conexion/conexion.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { CultivosComponent } from './pages/cultivos/cultivos.component';
 
 const routes: Routes = [
 
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: LoginComponent},
   // { path: '**', redirectTo: 'error404', pathMatch: 'full' },
-  { path: 'inicio', component: HomeComponent },
-  { path: 'usuarios', component: UsersComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'error404', component: Error404Component },
+  { path: 'Conexion', component: ConexionComponent },
+  { path: 'inicio', component: HomeComponent },
+  // { path: 'usuarios', component: UsersComponent },
+  { path: 'usuarios', component: PerfilComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'Inteligencia-Artificial', component: InteligencyArtComponent },
+  { path: 'Inteligencia-Artificial-Models', component: InteligencyArtModelsComponent },
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'cultivos', component: CultivosComponent },
 
 ]; 
 
