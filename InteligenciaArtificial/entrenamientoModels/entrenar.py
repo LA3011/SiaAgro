@@ -22,9 +22,19 @@ directorio_padre = os.path.abspath(os.path.join(directorio_actual, os.pardir))
 data_validacion = os.path.join(directorio_padre, 'data', 'validacion')
 data_entrenamiento = os.path.join(directorio_padre, 'data', 'entrenamiento')
 
+# determinar n* de clases
+def contar_carpetas(ruta):
+    try:
+        carpetas = [nombre for nombre in os.listdir(ruta) if os.path.isdir(os.path.join(ruta, nombre))]
+        return len(carpetas)
+    except FileNotFoundError:
+        print(f"La ruta {ruta} no existe.")
+        return 0
+n_carpetas = contar_carpetas(data_validacion) # numero de clases
+
 # Hiperparámetros
-clases = 1
-epocas = 2
+clases = n_carpetas
+epocas = 100
 batch_size = 32
 
 altura, longitud = 100, 100
