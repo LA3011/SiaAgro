@@ -6,10 +6,41 @@ class ArtifyCancelController {
   // Cancelar: ProcesoCMD entrenamiento.py
   public async killProcess(req: Request, res: Response) {
     try {
-        const { exec } = require('child_process');                                    // Uso: Modulo, para crear y controlar procesos secundarios.
-        const procesoAEliminar = 'python.exe';                                     // Nombre Proceso
-        await exec(`taskkill /F /IM ${procesoAEliminar}`);                            // Ejecuta el comando para detener el proceso
-        res.json({ message: `Proceso ${procesoAEliminar} detenido correctamente` });  // Envía una respuesta al cliente
+
+          const { exec } = require('child_process'); // Módulo para crear y controlar procesos secundarios
+          const path = require('path'); // Módulo para manejar y transformar rutas de archivo
+          const os = require('os'); // Módulo para obtener información del sistema operativo
+          const sistemaOperativo = os.platform(); // Determinar S.O en que se este ejecutando el cod.
+
+          const procesoAEliminar = 'python.exe'; // Nombre del proceso en Windows
+          const rutaRelativaProcesoAEliminar = path.join(__dirname, '..', '..', '..','InteligenciaArtificial', 'entrenamientoModels', 'entrenar.py'); // Ruta del proceso en Linux
+
+          if (sistemaOperativo === 'win32') {
+              // Código específico para Windows
+              exec(`taskkill /F /IM ${procesoAEliminar}`, (error:any, stdout:any, stderr:any) => {
+                  if (error) {
+                      console.error(`Error al detener el proceso en Windows: ${stderr}`);
+                      return;
+                  }
+                  // console.log(`Proceso ${procesoAEliminar} detenido correctamente en Windows`);
+              });
+          
+          } else if (sistemaOperativo === 'linux') {
+              // Código específico para Linux
+              exec(`pkill -f "${rutaRelativaProcesoAEliminar}"`, (error:any, stdout:any, stderr:any) => {
+                  if (error) {
+                      console.error(`Error al detener el proceso en Linux: ${stderr}`);
+                      return;
+                  }
+                  // console.log(`Proceso con ruta ${rutaRelativaProcesoAEliminar} detenido correctamente en Linux`);
+              });
+          
+          } else {
+              console.error('Sistema operativo no soportado');
+          }
+
+      res.json({ message: `Proceso detenido correctamente` }); // Envía una respuesta al cliente
+
         
     } catch (error) {
         res.status(500).json({ error: 'Error al detener el proceso' });               // Retorno: Msj Error Servidor / Petición
